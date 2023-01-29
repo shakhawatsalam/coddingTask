@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body{
+    background-color: #dcdce6;
+    background-image: url(./assets/pexels-moose-photos-1038001.jpg);
+}
