@@ -4,7 +4,7 @@ import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
-import {usernameValidate} from '../helper/validate.js'
+import { usernameValidate, passwordValidate } from '../helper/validate.js'
 
 const Username = () => {
 
@@ -14,12 +14,14 @@ const Username = () => {
       password: ''
     },
     validate: usernameValidate,
-    // validate: ,
+    validate: passwordValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
+      // console.log(values)
     }
   });
+  console.log(formik);
   return (
     <div className="container mx-auto">
 
@@ -55,7 +57,7 @@ const Username = () => {
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
-                <input {...formik.getFieldProps('password')} type="text" placeholder="Password" className="input input-bordered w-full max-w-xs" />
+                <input {...formik.getFieldProps('password')} type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" />
               </div>
               <button className="btn btn-success" type='submit'>Log in</button>
 
@@ -64,7 +66,13 @@ const Username = () => {
             </div>
             {/* hello  */}
             <div className="text-center py-4">
-              <span className='text-gray-500'>Still Not Register!! <Link className='text-red-500' to="/register">Register</Link></span>
+              {!formik.errors ?
+                <span className='text-gray-500'>Still Not Register!! <Link className='text-red-500' to="/register">Recover</Link></span>
+
+                :
+                <span className='text-gray-500'>Still Not Register!! <Link className='text-red-500' to="/register">Register</Link></span>
+
+              }
             </div>
           </form>
         </div>
