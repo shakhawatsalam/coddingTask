@@ -2,10 +2,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
+import { Toaster } from 'react-hot-toast';
+import { useFormik } from 'formik';
+import {usernameValidate} from '../helper/validate.js'
 
 const Username = () => {
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    validate: usernameValidate,
+    // validate: ,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async values => {
+    }
+  });
   return (
     <div className="container mx-auto">
+
+      <Toaster position='top-center' reverseOrder={false}></Toaster>
       <div className="flex justify-center items-center h-screen">
         <div className={styles.glass}>
 
@@ -15,7 +33,7 @@ const Username = () => {
             </span>
           </div>
 
-          <form className='py-1'>
+          <form className='py-1' onSubmit={formik.handleSubmit}>
             <div class="avatar flex justify-center mb-5">
               <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img src={avatar} />
@@ -31,9 +49,15 @@ const Username = () => {
                 <label className="label">
                   <span className="label-text">What is your name?</span>
                 </label>
-                <input type="text" placeholder="User Name" className="input input-bordered w-full max-w-xs" />
+                <input {...formik.getFieldProps('username')} type="text" placeholder="User Name" className="input input-bordered w-full max-w-xs" />
               </div>
-              <button className="btn btn-success">Log in</button>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input {...formik.getFieldProps('password')} type="text" placeholder="Password" className="input input-bordered w-full max-w-xs" />
+              </div>
+              <button className="btn btn-success" type='submit'>Log in</button>
 
               {/* <input type="text" placeholder='Username' />
               <button className={styles.btn} type='submit'>Let's Go</button> */}
