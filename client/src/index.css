@@ -6,4 +6,6 @@
 body{
     background-color: #dcdce6;
     background-image: url(./assets/pexels-moose-photos-1038001.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }

@@ -7,13 +7,14 @@
   @apply border-4 border-gray-50 shrink-0 h-3/4 w-[30%] rounded-3xl py-20 px-7 min-w-max;
 }
 .hello{
-  @apply border-4 border-gray-200 w-[150px] h-[150px] rounded-full shadow-lg cursor-pointer overflow-hidden;
+  @apply border-4 border-gray-200 w-[135px] h-[135px] rounded-full shadow-lg cursor-pointer overflow-hidden;
   @apply hover:border-accent;
 }
-
 .profile_img{
   width: 100%;
   height: 100%;
+  /* @apply border-4 border-gray-200 w-[150px] h-[150px] rounded-full shadow-lg cursor-pointer overflow-hidden;
+  @apply hover:border-accent; */
 
 }
 

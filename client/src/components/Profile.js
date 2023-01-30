@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import avatar from '../assets/avatar_3.jpg';
+import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import extend from '../styles/Profile.module.css';
 import { Toaster } from 'react-hot-toast';
@@ -62,35 +62,20 @@ const Profile = () => {
 
               <input onChange={onUpload} type="file" id='profile' name='profile' />
             </div>
-            {/* <div className='profile flex justify-center py-4'>
-             
-                <div class="avatar mb-5">
-                  <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src={file || avatar} />
-                  </div>
-                </div>
-                <label htmlFor="profile">
-                  <img src={file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
-                </label>
-
-
-              <input onChange={onUpload} type="file" name="profile" id="profile" />
-
-            </div> */}
             <div className="textbox flex flex-col items-center gap-6">
 
               <div className="name flex w-3/4 gap-10">
-                <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} `} type="text" placeholder='FirstName' />
-                <input {...formik.getFieldProps('lastName')} className={`${styles.textbox}`} type="text" placeholder='LastName' />
+                <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='FirstName' />
+                <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`}  type="text" placeholder='LastName' />
               </div>
 
 
               <div className="name flex w-3/4 gap-10">
-                <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} `} type="text" placeholder='Mobile No.' />
-                <input {...formik.getFieldProps('email')} className={`${styles.textbox}`} type="text" placeholder='Email*' />
+                <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Mobile No.' />
+                <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`}  type="text" placeholder='Email*' />
               </div>
 
-              <select {...formik.getFieldProps('select')} className={`${styles.textbox}`}>
+              <select {...formik.getFieldProps('select')} className={`${styles.textbox} ${extend.textbox}`} >
                 <option disabled selected>Sectors</option>
                 <option selected>Construction materials</option>
                 <option>ELectionics and Optics</option>
