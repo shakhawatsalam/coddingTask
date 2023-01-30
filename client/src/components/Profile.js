@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import avatar from '../assets/avatar_2.jpeg';
+import avatar from '../assets/avatar_3.jpg';
 import styles from '../styles/Username.module.css';
+import extend from '../styles/Profile.module.css';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
-import { profileValidation} from '../helper/validate.js';
+import { profileValidation } from '../helper/validate.js';
 import convertToBase64 from '../helper/convert';
 
 const Profile = () => {
@@ -43,7 +44,7 @@ const Profile = () => {
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
       <div className="flex justify-center items-center h-screen">
-        <div className={styles.glass} style={{ width: "60%", height: "85vh" }}>
+        <div className={`${styles.glass} ${extend.glass}`} style={{ width: "45%", paddingTop: '3rem' }}>
 
           <div className="title flex flex-col items-center">
             <h3 className='text-5xl font-bold'>Profile</h3>
@@ -52,18 +53,30 @@ const Profile = () => {
           </div>
 
           <form className='py-1' onSubmit={formik.handleSubmit}>
-            <div className='flex justify-center'>
+            <div className='profile flex justify-center py-4'>
               <label htmlFor="profile">
+                <div className={styles.hello}>
+                  <img src={file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
+                </div>
+              </label>
+
+              <input onChange={onUpload} type="file" id='profile' name='profile' />
+            </div>
+            {/* <div className='profile flex justify-center py-4'>
+             
                 <div class="avatar mb-5">
                   <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <img src={file || avatar} />
                   </div>
                 </div>
-              </label>
+                <label htmlFor="profile">
+                  <img src={file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
+                </label>
+
 
               <input onChange={onUpload} type="file" name="profile" id="profile" />
 
-            </div>
+            </div> */}
             <div className="textbox flex flex-col items-center gap-6">
 
               <div className="name flex w-3/4 gap-10">
@@ -86,12 +99,12 @@ const Profile = () => {
               <div className="form-control">
                 <label className="cursor-pointer label">
                   <span className="label-text text-xl">Agree to terms</span>
-                  <input {...formik.getFieldProps('check')} type="checkbox" onClick={handleCheck}  className="checkbox checkbox-accent ml-5" />
+                  <input {...formik.getFieldProps('check')} type="checkbox" onClick={handleCheck} className="checkbox checkbox-accent ml-5" />
                 </label>
               </div>
 
               {/* divide  */}
-              { check
+              {check
                 ?
                 <button className="btn btn-accent" type='submit' >Save</button>
                 :
