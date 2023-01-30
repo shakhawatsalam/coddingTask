@@ -4,20 +4,26 @@ import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
-import { registerValidate } from '../helper/validate.js';
+import { profileValidation} from '../helper/validate.js';
 import convertToBase64 from '../helper/convert';
 
 const Profile = () => {
-
   const [file, setFile] = useState();
+  const [check, setCheck] = useState(false);
+
+  const handleCheck = () => {
+    setCheck((prev) => !prev);
+  }
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      username: '',
-      password: ''
+      firstName: '',
+      lastName: '',
+      mobile: '',
+      select: '',
+      check: ''
     },
-    validate: registerValidate,
+    validate: profileValidation,
 
     validateOnBlur: false,
     validateOnChange: false,
@@ -64,14 +70,6 @@ const Profile = () => {
                 <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} `} type="text" placeholder='FirstName' />
                 <input {...formik.getFieldProps('lastName')} className={`${styles.textbox}`} type="text" placeholder='LastName' />
               </div>
-              {/* <div className="name flex w-3/4 gap-10">
-                <div className="form-control w-full max-w-xs">
-                  <input {...formik.getFieldProps('email')} type="text" placeholder="First Name" className="input input-bordered w-full max-w-xs" />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <input {...formik.getFieldProps('email')} type="text" placeholder="Last Name" className="input input-bordered w-full max-w-xs" />
-                </div>
-              </div> */}
 
 
               <div className="name flex w-3/4 gap-10">
@@ -79,14 +77,26 @@ const Profile = () => {
                 <input {...formik.getFieldProps('email')} className={`${styles.textbox}`} type="text" placeholder='Email*' />
               </div>
 
-              <select className={`${styles.textbox}`}>
+              <select {...formik.getFieldProps('select')} className={`${styles.textbox}`}>
                 <option disabled selected>Sectors</option>
                 <option selected>Construction materials</option>
                 <option>ELectionics and Optics</option>
               </select>
 
+              <div className="form-control">
+                <label className="cursor-pointer label">
+                  <span className="label-text text-xl">Agree to terms</span>
+                  <input {...formik.getFieldProps('check')} type="checkbox" onClick={handleCheck}  className="checkbox checkbox-accent ml-5" />
+                </label>
+              </div>
+
               {/* divide  */}
-              <button className="btn btn-success" type='submit'>Save</button>
+              { check
+                ?
+                <button className="btn btn-accent" type='submit' >Save</button>
+                :
+                <button className="btn btn-accent" disabled type='submit' >Save</button>
+              }
 
 
             </div>
@@ -94,8 +104,6 @@ const Profile = () => {
 
 
             <div className="text-center py-4">
-
-
               <span className='text-gray-500'>
                 come back leater!!
                 <Link className='text-red-500' to="/">Log Out</Link>
