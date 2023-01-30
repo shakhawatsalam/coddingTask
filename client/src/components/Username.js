@@ -66,13 +66,15 @@ const Username = () => {
             </div>
             {/* hello  */}
             <div className="text-center py-4">
-              {!formik.errors ?
-                <span className='text-gray-500'>Still Not Register!! <Link className='text-red-500' to="/register">Recover</Link></span>
 
-                :
-                <span className='text-gray-500'>Still Not Register!! <Link className='text-red-500' to="/register">Register</Link></span>
 
-              }
+              <span className='text-gray-500'>
+                Still Not Register!!
+                <Link className='text-red-500' to="/register">Register ||</Link>
+                <Link className='text-red-500' to="/recovery"> Recover</Link>
+              </span>
+
+
             </div>
           </form>
         </div>
