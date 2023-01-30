@@ -8,6 +8,21 @@ export async function usernameValidate(values) {
     return errors;
 };
 
+
+export async function passwordValidate(values) {
+    const errors = passWordVerify({}, values);
+
+    return errors;
+}
+export async function resetPasswordValidation(values) {
+    const error = passWordVerify({}, values);
+
+    if (values.password !== values.confirmPassword) {
+        error.exist = toast.error("Password Not matched...!");
+    };
+    return error;
+}
+
 // validate userName
 
 function usernameVerify(error = {}, values) {
@@ -19,11 +34,7 @@ function usernameVerify(error = {}, values) {
     return error;
 }
 
-export async function passwordValidate(values) {
-    const errors = passWordVerify({}, values);
 
-    return errors;
-}
 // validate password //
 function passWordVerify(errors = {}, values) {
 
