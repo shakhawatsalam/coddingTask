@@ -9,20 +9,20 @@ import * as controller from '../controllers/appcontroller.js'
 
 
 //Post Methods
-router.route('/register').post((req, res) => res.json('Register route'));
-router.route('/registerMail').post(); // send the email
-router.route('/authenticate').post(); // authenticate user
-router.route('/login').post(); // login in app
+router.route('/register').post(controller.register);
+// router.route('/registerMail').post(); // send the email
+router.route('/authenticate').post((req, res) => res.end()); // authenticate user
+router.route('/login').post(controller.login); // login in app
 
 // Get Mehods
-router.route('/user/:username').get(); //user with userName
-router.route('/generateOTP').get(); // genarate Random OTP
-router.route('/verifyOTP').get(); // verify generated OTP
-router.route('/createResetSession').get(); // reset all the variables;
+router.route('/user/:username').get(controller.getUser); //user with userName
+router.route('/generateOTP').get(controller.generateOTP); // genarate Random OTP
+router.route('/verifyOTP').get(controller.verifyOTP); // verify generated OTP
+router.route('/createResetSession').get(controller.createResetSession); // reset all the variables;
 
 
 //Put Method 
-router.route('/updateuser').put(); // is use to update he user profile
-router.route('/resetPassword').put(); // use to reset password
+router.route('/updateuser').put(controller.updateUser); // is use to update he user profile
+router.route('/resetPassword').put(controller.resetPassword); // use to reset password
 
 export default router;
