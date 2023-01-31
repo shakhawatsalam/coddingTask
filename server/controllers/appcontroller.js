@@ -12,7 +12,7 @@ export async function verifyUser(req, res, next) {
         const { username } = req.method == "GET" ? req.query : req.body;
         //check the user existence
         let exist = await UserModel.findOne({ username });
-        if (!exit) return res.status(404).send({ error: "Can't find User!!" });
+        if (!exist) return res.status(404).send({ error: "Can't find User!!" });
         next();
     } catch (error) {
         return res.status(404).send({ error: "Authentication Error" });
@@ -179,14 +179,14 @@ body: {
 */
 export async function updateUser(req, res) {
     try {
-        const id = req.query.id;
-        // const { userId } = req.user;
-        if (id) {
+        // const id = req.query.id;
+        const { userId } = req.user;
+        if (userId) {
             const body = req.body;
 
             //update the data
             UserModel.updateOne({
-                _id: id
+                _id: userId
             }, body, function (err, data) {
                 if (err) throw err;
 
