@@ -142,8 +142,8 @@ export async function login(req, res) {
 
 /** GET: http://localhost:8080/api/user/example123 */
 export async function getUser(req, res) {
-    
-    const { username } = req.params; 
+
+    const { username } = req.params;
 
     try {
         if (!username) return res.status(501).send({ error: "Invalid Username" });
@@ -161,7 +161,7 @@ export async function getUser(req, res) {
 
 
 
-        
+
     } catch (error) {
         return res.status(404).send({ error: "Cannot Find User Data" });
     }
@@ -178,7 +178,28 @@ body: {
 }
 */
 export async function updateUser(req, res) {
-    res.json('updateUser route');
+    try {
+        const id = req.query.id;
+        // const { userId } = req.user;
+        if (id) {
+            const body = req.body;
+
+            //update the data
+            UserModel.updateOne({
+                _id: id
+            }, body, function (err, data) {
+                if (err) throw err;
+
+                return res.status(201).send({ msg: "Record Updated...!!" });
+            });
+
+        } else {
+            return res.status(401).send({ error: "User Not Found...!!" });
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error });
+    }
 };
 
 /** GET: http://localhost:8080/api/generateOTP */
