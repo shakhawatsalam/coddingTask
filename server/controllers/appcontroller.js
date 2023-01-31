@@ -1,11 +1,12 @@
 
 import UserModel from "../Model/User.model.js";
 import bcrypt from 'bcrypt';
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import ENV from '../config.js'
 
 
 
-
+//middleware for verify user
 
 
 
@@ -34,11 +35,11 @@ export async function register(req, res) {
                 resolve();
             })
 
-           
+
         });
 
-         // check for existing email
-         const existingEmail = new Promise((resolve, reject) => {
+        // check for existing email
+        const existingEmail = new Promise((resolve, reject) => {
             UserModel.findOne({ email }, function (err, email) {
                 if (err) reject(new Error(err));
                 if (email) reject({ error: "Please use unique email this email is already exist" });
@@ -66,7 +67,7 @@ export async function register(req, res) {
                             //return save result as response
                             user.save()
                                 .then(result => res.status(201).send({ message: "User Register Successfully" }))
-                            .catch(error => res.status(500).send({error}))
+                                .catch(error => res.status(500).send({ error }))
 
 
 
@@ -107,7 +108,7 @@ export async function login(req, res) {
                             userId: user._id,
                             username: user.username,
 
-                        }, "secret", { expiresIn: "24h" });
+                        }, ENV.JWT_SECRET, { expiresIn: "24h" });
 
                         return res.status(200).send({
                             msg: "Login SuccessFully",
@@ -117,12 +118,12 @@ export async function login(req, res) {
                     })
                     .catch(error => {
                         return res.status(400).send({ error: "Password does not Match" });
-                })
+                    })
             })
             .catch(error => {
                 return res.status(404).send({ error: "Username Not Found" });
             });
-        
+
     } catch (error) {
         return res.status(500).send({ error });
     }
