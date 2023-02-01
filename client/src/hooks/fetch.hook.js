@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN
 
 
-
+// custom hook is ready 
 export default function useFetch(query) {
     const [getData, setData] = useState({ isLoading: false, apiData: undefined, status: null, serverError: null });
 

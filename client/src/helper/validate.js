@@ -9,7 +9,7 @@ export async function usernameValidate(values) {
         const { status } = await authencate(values.username);
 
         if (status !== 200) {
-            errors.exist = toast.error("Chose a unique userName");
+            errors.exist = toast.error("User does't exist");
         }
     }
 
@@ -42,7 +42,7 @@ export async function registerValidate(values) {
 
 }
 // validate profile page 
-export async function profileValidation(values){
+export async function profileValidation(values) {
     const errors = emailVerify({}, values);
     return errors;
 }
@@ -51,7 +51,7 @@ export async function profileValidation(values){
 function usernameVerify(error = {}, values) {
     if (!values.username) {
         error.username = toast.error('Username Required...!');
-    } else if (values.username.includes(" ")  || values.password.includes(" ")) {
+    } else if (values.username.includes(" ")) {
         error.username = toast.error('Invalid Username...');
     }
     return error;
