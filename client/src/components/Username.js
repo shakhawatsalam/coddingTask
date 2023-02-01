@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { usernameValidate, passwordValidate } from '../helper/validate.js'
-
+import { useAuthStore } from '../store/store.js';
 const Username = () => {
 
+  const setUserName = useAuthStore(state => state.setUserName);
+
+
+  //=====================================
   const formik = useFormik({
     initialValues: {
       username: '',
-      password: ''
+      // password: ''
     },
     validate: usernameValidate,
-    validate: passwordValidate,
+    // validate: passwordValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
-      // console.log(values)
+      // console.log(values.username)
+      setUserName(values.username);
     }
   });
-  console.log(formik);
   return (
     <div className="container mx-auto">
 
@@ -36,8 +40,8 @@ const Username = () => {
           </div>
 
           <form className='py-1' onSubmit={formik.handleSubmit}>
-            <div class="avatar flex justify-center mb-5">
-              <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <div className="avatar flex justify-center mb-5">
+              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img src={avatar} />
               </div>
             </div>

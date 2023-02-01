@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Make api request
 
-
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN 
 
 
 
