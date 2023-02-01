@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import toast,{ Toaster } from 'react-hot-toast';
@@ -11,6 +11,7 @@ import { registerUser } from '../helper/helper';
 const Register = () => {
 
   const [file, setFile] = useState();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -31,6 +32,8 @@ const Register = () => {
         success: <b>Register Successfully</b>,
         error: <b>Could Not Register</b>
       });
+
+      registerPromise.then(function () { navigate('/') });
     }
   });
   // formik dosent't supprot file upload so we need to create this handaler
