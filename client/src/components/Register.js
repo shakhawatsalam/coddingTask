@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
-import { Toaster } from 'react-hot-toast';
+import toast,{ Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { registerValidate } from '../helper/validate.js';
 import convertToBase64 from '../helper/convert';
+import { registerUser } from '../helper/helper';
 
 const Register = () => {
 
@@ -22,8 +23,14 @@ const Register = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
+      console.log(values);
       values = await Object.assign(values, { profile: file || '' });
-      console.log(values)
+      let registerPromise = registerUser(values);
+      toast.promise(registerPromise, {
+        loading: "Creating.....!",
+        success: <b>Register Successfully</b>,
+        error: <b>Could Not Register</b>
+      });
     }
   });
   // formik dosent't supprot file upload so we need to create this handaler
