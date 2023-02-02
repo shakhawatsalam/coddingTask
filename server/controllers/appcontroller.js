@@ -78,7 +78,7 @@ export async function register(req, res) {
 
                             //return save result as response
                             user.save()
-                                .then(result => res.status(201).send({ msg : "User Register Successfully" }))
+                                .then(result => res.status(201).send({ msg: "User Register Successfully" }))
                                 .catch(error => res.status(500).send({ error }))
 
 
@@ -225,8 +225,7 @@ export async function verifyOTP(req, res) {
 /** GET: http://localhost:8080/api/createResetSession */
 export async function createResetSession(req, res) {
     if (req.app.locals.resetSession) {
-        req.app.locals.resetSession = false;
-        return res.status(201).send({ msg: "assess granted" });
+        return res.status(201).send({ flag: req.app.locals.resetSession});
     }
     return res.status(440).send({ error: "Session expired" });
 };
