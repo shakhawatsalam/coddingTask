@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import extend from '../styles/Profile.module.css';
-import { Toaster } from 'react-hot-toast';
+import toast,{ Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { profileValidation } from '../helper/validate.js';
 import convertToBase64 from '../helper/convert';
+import useFetch from '../hooks/fetch.hook';
+import { updateUser } from '../helper/helper';
 
 const Profile = () => {
   const [file, setFile] = useState();
   const [check, setCheck] = useState(false);
+  const [{ isLoading, apiData, serverError }] = useFetch();
+  const navigate = useNavigate()
+
 
   const handleCheck = () => {
     setCheck((prev) => !prev);
@@ -18,19 +23,26 @@ const Profile = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      mobile: '',
-      select: '',
-      check: ''
+      firstName: apiData?.firstName || '',
+      lastName: apiData?.lastName ||'',
+      email: apiData?.email || '',
+      mobile: apiData?.mobile ||'',
+      select: apiData?.select ||'',
     },
+    enableReinitialize : true,
     validate: profileValidation,
 
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
-      values = await Object.assign(values, { profile: file || '' });
-      console.log(values)
+      values = await Object.assign(values, { profile: file ||apiData?.profile ||'' });
+      let updatePromise = updateUser(values);
+      toast.promise(updatePromise, {
+        loading: 'Updating',
+        success: <b>Update Successfully...!</b>,
+        error: <b>Could not Update</b>
+      });
+      // console.log(values);
     }
   });
   // formik dosent't supprot file upload so we need to create this handaler
@@ -38,7 +50,19 @@ const Profile = () => {
     const base64 = await convertToBase64(e.target.files[0]);
     setFile(base64);
     console.log(base64)
+  };
+
+  //logout handler function
+  function userLogout() {
+    localStorage.removeItem('token');
+    navigate('/');
   }
+
+
+// +++++++++++++++++
+  if (isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
+  if (serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
+  // ++++++++++++++++
   return (
     <div className="container mx-auto">
 
@@ -56,7 +80,7 @@ const Profile = () => {
             <div className='profile flex justify-center py-4'>
               <label htmlFor="profile">
                 <div className={styles.hello}>
-                  <img src={file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
+                  <img src={apiData?.profile || file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
                 </div>
               </label>
 
@@ -66,17 +90,17 @@ const Profile = () => {
 
               <div className="name flex w-3/4 gap-10">
                 <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='FirstName' />
-                <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`}  type="text" placeholder='LastName' />
+                <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='LastName' />
               </div>
 
 
               <div className="name flex w-3/4 gap-10">
                 <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Mobile No.' />
-                <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`}  type="text" placeholder='Email*' />
+                <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Email*' />
               </div>
 
               <select {...formik.getFieldProps('select')} className={`${styles.textbox} ${extend.textbox}`} >
-                <option disabled selected>Sectors</option>
+                {/* <option disabled selected>Sectors</option> */}
                 <option selected>Construction materials</option>
                 <option>ELectionics and Optics</option>
               </select>
@@ -91,9 +115,9 @@ const Profile = () => {
               {/* divide  */}
               {check
                 ?
-                <button className="btn btn-accent" type='submit' >Save</button>
+                <button className="btn btn-accent" type='submit' >Update</button>
                 :
-                <button className="btn btn-accent" disabled type='submit' >Save</button>
+                <button className="btn btn-accent" disabled type='submit' >Update</button>
               }
 
 
@@ -104,7 +128,7 @@ const Profile = () => {
             <div className="text-center py-4">
               <span className='text-gray-500'>
                 come back leater!!
-                <Link className='text-red-500' to="/">Log Out</Link>
+                <Link className='text-red-500'to="/">Log Out</Link>
               </span>
 
 

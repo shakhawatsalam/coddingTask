@@ -13,10 +13,8 @@ export default function Password() {
 
   const navigate = useNavigate()
   const { username } = useAuthStore(state => state?.auth);
-  console.log(username);
   const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`);
   console.log(apiData);
-
   const formik = useFormik({
     initialValues: {
       password: ''
