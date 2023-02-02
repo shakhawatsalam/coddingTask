@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import avatar from '../assets/avatar_2.jpeg';
 import styles from '../styles/Username.module.css';
 import extend from '../styles/Profile.module.css';
@@ -156,7 +156,7 @@ const Profile = () => {
             <div className="text-center py-4">
               <span className='text-gray-500'>
                 come back leater!!
-                <Link className='text-red-500'to="/">Log Out</Link>
+                <p className='text-red-500' onClick={userLogout}>Log Out</p>
               </span>
 
 

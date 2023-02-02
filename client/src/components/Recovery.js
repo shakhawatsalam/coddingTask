@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Username.module.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthStore } from '../store/store';
@@ -15,7 +15,7 @@ const Recovery = () => {
 
   useEffect(() => {
     genarateOTP(username).then((OTP) => {
-      console.log(OTP);
+      setOTP(OTP);
       if (OTP) return toast.success('OTP has been send to your Email');
       return toast.error('Problem while generating OTP');
     })
@@ -65,6 +65,9 @@ const Recovery = () => {
           <div className="title flex flex-col items-center">
             <h3 className='text-3xl font-bold'>Recover </h3>
             <h3 className='text-3xl font-bold'>Password</h3>
+            <h6 className='text-red-500' >Your OTP is {OTP}</h6>
+
+
             <span className='py-4 text-xl w-2/3 text-center text-gray-500'>Enter OTP to recover password
             </span>
           </div>
@@ -73,7 +76,7 @@ const Recovery = () => {
             <div className="textbox flex flex-col items-center gap-6">
               <div className="form-control w-full max-w-xs">
                 <label className="label">
-                  <span className="label-text">Enter 6 digit OTP sent to your email address</span>
+                  <span className="label-text">Enter {OTP} 6 digit OTP sent to your email address</span>
                 </label>
                 <input onChange={(e) => setOTP(e.target.value)} type="text" placeholder="OTP" className="input input-bordered w-full max-w-xs" />
                 <button className="btn btn-success mt-10" type='submit'>Recover</button>

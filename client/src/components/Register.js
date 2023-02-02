@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import avatar from '../assets/avatar_2.jpeg';
+import avatar from '../assets/avatar.png';
 import styles from '../styles/Username.module.css';
 import toast,{ Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
@@ -24,7 +24,6 @@ const Register = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
-      console.log(values);
       values = await Object.assign(values, { profile: file || '' });
       let registerPromise = registerUser(values);
       toast.promise(registerPromise, {
@@ -40,7 +39,6 @@ const Register = () => {
   const onUpload = async e => {
     const base64 = await convertToBase64(e.target.files[0]);
     setFile(base64);
-    console.log(base64)
   }
   return (
     <div className="container mx-auto">
@@ -60,7 +58,7 @@ const Register = () => {
               <label htmlFor="profile">
                 <div class="avatar mb-5">
                   <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src={file || avatar} />
+                    <img alt='h' src={file || avatar} />
                   </div>
                 </div>
               </label>

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import avatar from '../assets/avatar_2.jpeg';
+import avatar from '../assets/avatar.png';
 import { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { usernameValidate } from '../helper/validate'
