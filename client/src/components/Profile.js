@@ -15,7 +15,32 @@ const Profile = () => {
   const [check, setCheck] = useState(false);
   const [{ isLoading, apiData, serverError }] = useFetch();
   const navigate = useNavigate()
+  const sectors = [
+    {
+      id: 1,
+      sec:" Construction materials",
+      
 
+    },
+    {
+      id: 2,
+      sec: "ElectronicsandOptics",
+      
+
+    },
+    {
+      id: 3,
+      sec: "Food and Beverage",
+      
+
+    },
+    {
+      id: 4,
+      sec: "Beverages",
+      
+
+    },
+  ];
 
   const handleCheck = () => {
     setCheck((prev) => !prev);
@@ -101,8 +126,11 @@ const Profile = () => {
 
               <select {...formik.getFieldProps('select')} className={`${styles.textbox} ${extend.textbox}`} >
                 {/* <option disabled selected>Sectors</option> */}
-                <option selected>Construction materials</option>
-                <option>ELectionics and Optics</option>
+                {
+                  sectors.map((items, index) => (
+                    <option selected>{items.sec}</option>
+                  ))
+               }
               </select>
 
               <div className="form-control">
