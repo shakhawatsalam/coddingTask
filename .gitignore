@@ -9,6 +9,8 @@ server/.env
 /.pnp
 .pnp.js
 
+.vercel
+
 # testing
 /coverage
 
